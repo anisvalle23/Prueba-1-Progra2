@@ -1,22 +1,29 @@
 
 package prueba.pkg1.progra2;
 
-
 public class RentItem {
-     private String codigoItem;
+    private String codigoItem;
     private String nombreItem;
     private double precioRenta;
     private int cantidadCopias;
-    
-     public RentItem(String codigoItem, String nombreItem, double precioRenta) {
+
+    public RentItem(String codigoItem, String nombreItem, double precioRenta) {
         this.codigoItem = codigoItem;
         this.nombreItem = nombreItem;
         this.precioRenta = precioRenta;
         this.cantidadCopias = 0;
     }
-  @Override
+
+    @Override
     public String toString() {
-        return "CODIGO: " + codigoItem + ", NOMBRE: " + nombreItem + ", PRECIO DE RENTA: " + precioRenta;
+        return String.format("""
+                             *******************************
+                             * Codigo: %s
+                             * Nombre: %s
+                             * Precio de Renta: %.2f
+                             *******************************""",
+            codigoItem, nombreItem, precioRenta
+        );
     }
 
     public double pagoRenta(int dias) {
@@ -43,8 +50,7 @@ public class RentItem {
         return "1-Imprimir";
     }
 
-   
-    public void ejecutarOpcionRI(int opcion) {
+    public void ejecutarOpcion(int opcion) {
         if (opcion == 1) {
             System.out.println(this);
         } else {
@@ -52,3 +58,4 @@ public class RentItem {
         }
     }
 }
+

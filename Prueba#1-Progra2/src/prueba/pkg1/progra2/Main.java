@@ -4,103 +4,112 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    private static ArrayList<RentItem> itemsMN = new ArrayList<>();
-    private static Scanner scannerMN = new Scanner(System.in);
+    private static ArrayList<RentItem> items = new ArrayList<>();
+    private static Scanner read = new Scanner(System.in);
 
     public static void main(String[] args) {
-        menuMN();
+        menu();
     }
 
-    public static void menuMN() {
-        System.out.println("1- Agregar Item");
-        System.out.println("2- Consultar Item");
-        System.out.println("3- Ejecutar Sub Menú");
-        System.out.println("4- Imprimir Todo");
-        System.out.println("5- Salir");
+    public static void menu() {
+        System.out.println("*******************************");
+        System.out.println("* 1- Agregar Item             *");
+        System.out.println("* 2- Consultar Item           *");
+        System.out.println("* 3- Ejecutar Sub Menú        *");
+        System.out.println("* 4- Imprimir Todo            *");
+        System.out.println("* 5- Salir                    *");
+        System.out.println("*******************************");
         System.out.print("Seleccione una opción: ");
-        int opcionMN = scannerMN.nextInt();
-        scannerMN.nextLine(); // Limpiar buffer
+        int opcion = read.nextInt();
+        read.nextLine(); 
 
-        if (opcionMN == 1) {
-            agregarItemMN();
-        } else if (opcionMN == 2) {
-            consultarItemMN();
-        } else if (opcionMN == 3) {
-            ejecutarSubMenuMN();
-        } else if (opcionMN == 4) {
-            imprimirTodoMN();
-        } else if (opcionMN == 5) {
-            System.exit(0);
-        } else {
-            System.out.println("Opción no válida");
+        switch (opcion) {
+            case 1:
+                agregarItem();
+                break;
+            case 2:
+                consultarItem();
+                break;
+            case 3:
+                ejecutarSubMenu();
+                break;
+            case 4:
+                imprimirTodo();
+                break;
+            case 5:
+                System.exit(0);
+            default:
+                System.out.println("Opción no válida");
+                break;
         }
-        menuMN(); // Llamar recursivamente al menú
+        menu(); 
     }
 
-    public static void agregarItemMN() {
+    public static void agregarItem() {
         System.out.print("Ingrese el tipo de item (MOVIE/PS3): ");
-        String tipoMN = scannerMN.nextLine();
-        if (tipoMN.equalsIgnoreCase("MOVIE")) {
+        String tipo = read.nextLine();
+        if (tipo.equalsIgnoreCase("MOVIE")) {
             System.out.print("Ingrese el código del item: ");
-            String codigoMN = scannerMN.nextLine();
+            String codigo = read.nextLine();
             System.out.print("Ingrese el nombre del item: ");
-            String nombreMN = scannerMN.nextLine();
+            String nombre = read.nextLine();
             System.out.print("Ingrese el precio de renta del item: ");
-            double precioMN = scannerMN.nextDouble();
-            itemsMN.add(new Movie(codigoMN, nombreMN, precioMN));
-        } else if (tipoMN.equalsIgnoreCase("PS3")) {
+            double precio = read.nextDouble();
+            items.add(new Movie(codigo, nombre, precio));
+        } else if (tipo.equalsIgnoreCase("PS3")) {
             System.out.print("Ingrese el código del item: ");
-            String codigoMN = scannerMN.nextLine();
+            String codigo = read.nextLine();
             System.out.print("Ingrese el nombre del item: ");
-            String nombreMN = scannerMN.nextLine();
-            itemsMN.add(new PS3Game(codigoMN, nombreMN));
+            String nombre = read.nextLine();
+            items.add(new PS3Game(codigo, nombre));
         } else {
             System.out.println("TIPO INCORRECTO");
         }
     }
 
-    public static void consultarItemMN() {
+    public static void consultarItem() {
         System.out.print("Ingrese el código del item: ");
-        String codigoMN = scannerMN.nextLine();
-        RentItem itemMN = null;
-        for (RentItem i : itemsMN) {
-            if (i.getCodigoItem().equals(codigoMN)) {
-                itemMN = i;
+        String codigo = read.nextLine();
+        RentItem item = null;
+        for (RentItem i : items) {
+            if (i.getCodigoItem().equals(codigo)) {
+                item = i;
                 break;
             }
         }
-        if (itemMN != null) {
-            System.out.println(itemMN);
+        if (item != null) {
+            System.out.println(item);
             System.out.print("Ingrese los días de renta: ");
-            int diasMN = scannerMN.nextInt();
-            System.out.println("Monto a pagar: " + itemMN.pagoRenta(diasMN));
+            int dias = read.nextInt();
+            System.out.println("Monto a pagar: " + item.pagoRenta(dias));
         } else {
             System.out.println("Item No Existe");
         }
     }
 
-    public static void ejecutarSubMenuMN() {
+    public static void ejecutarSubMenu() {
         System.out.print("Ingrese el código del item: ");
-        String codigoMN = scannerMN.nextLine();
-        RentItem itemMN = null;
-        for (RentItem i : itemsMN) {
-            if (i.getCodigoItem().equals(codigoMN)) {
-                itemMN = i;
+        String codigo = read.nextLine();
+        RentItem item = null;
+        for (RentItem i : items) {
+            if (i.getCodigoItem().equals(codigo)) {
+                item = i;
                 break;
             }
         }
-        if (itemMN != null) {
-            System.out.println(itemMN.submenu() + "\nEscoja Opción: ");
-            int subOpcionMN = scannerMN.nextInt();
-            itemMN.ejecutarOpcionRI(subOpcionMN);
+        if (item != null) {
+            System.out.println(item.submenu() + "\nEscoja Opción: ");
+            int subOpcion = read.nextInt();
+            item.ejecutarOpcion(subOpcion);
         } else {
             System.out.println("Item No Existe");
         }
     }
 
-    public static void imprimirTodoMN() {
-        for (RentItem i : itemsMN) {
+    public static void imprimirTodo() {
+        for (RentItem i : items) {
             System.out.println(i);
+       
         }
     }
 }
